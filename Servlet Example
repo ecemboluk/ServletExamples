@@ -1,0 +1,157 @@
+Örnek 1:
+
+package deneme;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+@WebServlet("/MyFirstServlet")
+public class MyFirstServlet extends HttpServlet {
+ private static final long serialVersionUID = 1L;
+ String merhaba;
+ String ad;
+ String soyad;
+    public MyFirstServlet() {
+        super();
+        merhaba="Merhaba Java Severler bu benim ilk servletim";
+        ad="Ecem";
+        soyad="Bölük";
+        // TODO Auto-generated constructor stub
+    }
+ protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+     final PrintWriter out=response.getWriter();
+     out.println(merhaba);
+     out.println(ad);
+     out.println(soyad);
+     out.println("-----------");
+     out.println("Remote Host:"+request.getRemoteHost());
+     out.println("Port Number:"+request.getRemotePort());
+ }
+
+}
+
+Örnek 2:
+
+/**
+ * Servlet implementation class MyServlet
+ */
+@WebServlet("/MyServlet")
+public class MyServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public MyServlet() {
+        super();
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
+		PrintWriter out=response.getWriter();
+		out.println("<html><head><title>Bu Benim Servlet Örneğim");
+		out.println("</title></head><body>");
+		out.println("Servlet örneği çalıştı.");
+		out.println("</body></html>");
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
+
+
+Örnek 3:/Form İşlemleri
+
+//Deneme.html
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Matematik İşlemleri</title>
+</head>
+<body>
+<div>Basit Hesap Makinesi</div>
+<br>
+<form action="http://localhost:8080/ServletCalisma/MyServlet" method="get">
+Birinci Sayiyi girin: <input type="text" name="sayi1"/></br>
+İkinci Sayiyi girin : <input type="text" name="sayi2"/></br>
+İşlem türünü girin(simge ile):<input type="text" name="islem"/></br>
+<input type="submit" value="Hesapla"/>
+</form>
+</body>
+</html>
+
+//MyServlet.java
+
+@WebServlet("/MyServlet")
+public class MyServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	double sonuc,sayi1,sayi2;
+	String islem;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public MyServlet() {
+        super();
+        islem="";
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
+		PrintWriter out=response.getWriter();
+		out.print("<html><head><title>Sonuç Servlet");
+        out.print("</title></head><body>");
+        
+        islem=request.getParameter("islem");
+        sayi1=Double.parseDouble(request.getParameter("sayi1"));
+        sayi2=Double.parseDouble(request.getParameter("sayi2"));
+        
+        out.println("Sonuc :"+İslem(sayi1,sayi2,islem));
+        out.println("</body></html>");
+        
+        
+        
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+	
+	public double İslem(double say1,double say2, String islem){
+		if(islem=="+")
+        	return sonuc=sayi1+sayi2;
+        else if(islem=="-")
+        	return sonuc=sayi1-sayi2;
+        else if(islem=="carp")
+        	return sonuc=sayi1*sayi2;
+        else if(islem=="böl")
+        	return sonuc=sayi1/sayi2;
+		
+		return 0;
+		
+	}
+
+}
